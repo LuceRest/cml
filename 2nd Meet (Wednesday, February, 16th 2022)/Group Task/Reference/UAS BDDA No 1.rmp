@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.3.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="text:create_document" compatibility="9.3.001" expanded="true" height="68" name="Create Document" width="90" x="112" y="136">
+        <parameter key="text" value="The appearance of the Indonesian national team during the 2020 AFF Cup made the market price of its players increase. The Garuda squad is now the second most expensive in Southeast Asia"/>
+        <parameter key="add label" value="false"/>
+        <parameter key="label_type" value="nominal"/>
+        <parameter key="label_value" value="3"/>
+      </operator>
+      <operator activated="true" class="text:tokenize" compatibility="9.3.001" expanded="true" height="68" name="Tokenize" width="90" x="313" y="136">
+        <parameter key="mode" value="non letters"/>
+        <parameter key="characters" value=".:"/>
+        <parameter key="language" value="English"/>
+        <parameter key="max_token_length" value="3"/>
+      </operator>
+      <operator activated="true" class="text:stem_porter" compatibility="9.3.001" expanded="true" height="68" name="Stem (Porter)" width="90" x="514" y="136"/>
+      <connect from_op="Create Document" from_port="output" to_op="Tokenize" to_port="document"/>
+      <connect from_op="Tokenize" from_port="document" to_op="Stem (Porter)" to_port="document"/>
+      <connect from_op="Stem (Porter)" from_port="document" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
